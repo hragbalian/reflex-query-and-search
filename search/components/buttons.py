@@ -24,4 +24,14 @@ def stop_search_button(
                 title="Stop search",
                 on_click=stop_action
             )
-    
+
+def reset_button(
+    reset_action: list = []
+    ) -> rx.Component:
+    return rx.icon_button(
+                rx.icon(tag="rotate-ccw"),
+                variant="soft",
+                radius="full",
+                on_click=reset_action,
+                title="Reset search"
+                ),

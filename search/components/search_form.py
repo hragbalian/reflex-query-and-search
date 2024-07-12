@@ -2,16 +2,19 @@
 import reflex as rx
 
 
-from search.states.main import State
-
 from search.components.buttons import (
     stop_search_button,
-    submit_search_button
+    submit_search_button,
 )
 
 def search_form(
     processing: bool,
-    submit_actions: list = []
+    search_sequence: int,
+    placeholder: str,
+    default_value: str,
+    submit_actions: list = [],
+    stop_action: list = [],
+    search_query: str = ""
     ) -> rx.Component:
     
     return rx.vstack(
@@ -29,13 +32,11 @@ def search_form(
                         rx.input.slot(
                             
                             rx.cond(
-                                State.search_count==0,
+                                search_sequence==0,
                                 submit_search_button(),
                                 rx.cond(
                                     processing,
-                                    stop_search_button(
-                                        stop_action=State.stop_search
-                                        ),
+                                    stop_search_button(stop_action=stop_action),
                                     submit_search_button()
                                 )
                             )
@@ -43,8 +44,8 @@ def search_form(
                             
                         ),
                         
-                        default_value=State.search_query,
-                        placeholder=State.search_placeholder,
+                        default_value=default_value,
+                        placeholder=placeholder,
                         name="search_query",
                         required=True,
                         width="100%",
@@ -60,6 +61,7 @@ def search_form(
                     ),
                     
                 width="100%",
+                justify="center",
                 align="center",
                 z_index=100,
                 ),
@@ -67,11 +69,12 @@ def search_form(
             on_submit=submit_actions,
             
             reset_on_submit=True,
+            justify="center",
             align="center",
             ),
     
     
-    rx.heading(State.search_query, size="3"),
+    rx.heading(search_query, size="3"),
     
     
     

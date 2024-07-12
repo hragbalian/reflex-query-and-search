@@ -14,6 +14,7 @@ class State(rx.State):
     search_followup_placeholder: str = "Ask a follow-up"
     search_count: int = 0
     search_query: str = ""
+    search_default: str = ""
     search_response: str = ""
     
     
